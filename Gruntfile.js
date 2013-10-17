@@ -14,6 +14,24 @@ module.exports = function (grunt) {
   require("load-grunt-tasks")(grunt);
   
   grunt.initConfig({
+    copy: {
+      dist: {
+        files: [{
+          expand: true,
+          dot: true,
+          cwd: "./public",
+          dest: ".tmp",
+          src: ["bower_components/**/*"]
+        },{
+          expand: true,
+          dot: true,
+          cwd: "./src",
+          dest: ".tmp",
+          src: ["ag/**/*"]
+        }]
+      }
+    },
+    
     watch: {
       scripts: {
         files: ["src/**/*.js"],
@@ -46,7 +64,8 @@ module.exports = function (grunt) {
           middleware: function (connect) {
             return [
               lrSnippet,
-              mountFolder(connect, "test")
+              mountFolder(connect, "public"),
+              mountFolder(connect, "src")
             ];
           }
         }
@@ -74,15 +93,46 @@ module.exports = function (grunt) {
     },
     
     clean: {
-      dist: ["dist"],
+      dist: [".tmp", "dist"],
       server: [".tmp"]
+    },
+    
+    requirejs: {
+      dist: {
+        // Options: https://github.com/jrburke/r.js/blob/master/build/example.build.js
+        options: {
+          name: "ag/ag",
+          baseUrl: ".tmp",
+          mainConfigFile: ".tmp/ag/main.js",
+          out: "dist/",
+          optimize: "uglify2",
+          generateSourceMaps: true,
+          // required to support SourceMaps
+          // http://requirejs.org/docs/errors.html#sourcemapcomments
+          preserveLicenseComments: false,
+          useStrict: true,
+          wrap: true,
+          // https://github.com/mishoo/UglifyJS2
+          uglify2: {
+            output: {
+              beautify: true,
+              "indent-level": 2
+            },
+            compress: {
+              sequences: false
+            },
+            warnings: true,
+            mangle: false
+          }
+        }
+      }
     }
 
   });
   
-  grunt.registerTask("server", ["clean", "jshint", "connect:liveload", "open", "watch"]);
+  grunt.registerTask("server", ["clean:server", "jshint", "connect:liveload", "open", "watch"]);
   
-  grunt.registerTask("dist", ["clean:dist", "jshint", "concat:dist", "copy:dist"]);
+  grunt.registerTask("build", ["clean:dist", "jshint", "copy:dist", "requirejs:dist"]);
   
   grunt.registerTask("test", ["clean:server", "jshint", "connect:test", "watch"]);
   
