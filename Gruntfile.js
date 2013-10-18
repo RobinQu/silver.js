@@ -19,16 +19,18 @@ module.exports = function (grunt) {
         files: [{
           expand: true,
           dot: true,
-          cwd: "./public",
-          dest: ".tmp",
-          src: ["bower_components/**/*"]
-        },{
-          expand: true,
-          dot: true,
           cwd: "./src",
           dest: ".tmp",
           src: ["ag/**/*"]
-        }]
+        }// , 
+//         {
+//           expand: true,
+//           dot: true,
+//           cwd: "./public",
+//           dest: ".tmp/ag",
+//           src: ["bower_components/**/*"]
+//         }
+        ]
       }
     },
     
@@ -101,38 +103,60 @@ module.exports = function (grunt) {
       dist: {
         // Options: https://github.com/jrburke/r.js/blob/master/build/example.build.js
         options: {
-          name: "ag/ag",
-          baseUrl: ".tmp",
+          name: "ag",
+          baseUrl: ".tmp/ag",
           mainConfigFile: ".tmp/ag/main.js",
-          out: "dist/",
-          optimize: "uglify2",
-          generateSourceMaps: true,
+          paths: {
+            backbone: "empty:",
+            jquery: "empty:",
+            underscore: "empty:"
+          },
+          out: "dist/ag.js",
+          optimize: "none",
+          generateSourceMaps: false,
           // required to support SourceMaps
           // http://requirejs.org/docs/errors.html#sourcemapcomments
           preserveLicenseComments: false,
           useStrict: true,
           wrap: true,
           // https://github.com/mishoo/UglifyJS2
-          uglify2: {
-            output: {
-              beautify: true,
-              "indent-level": 2
-            },
-            compress: {
-              sequences: false
-            },
-            warnings: true,
-            mangle: false
-          }
+          // uglify2: {
+          //   output: {
+          //     beautify: true,
+          //     "indent_level": 2
+          //   },
+          //   compress: {
+          //     sequences: false,
+          //     "global_defs": {
+          //       DEBUG: false
+          //     }
+          //   },
+          //   warnings: true,
+          //   mangle: false
+          // }
+        }
+      }
+    },
+    
+    uglify: {
+      options: {
+        mangle: false
+      },
+      dist: {
+        files: {
+          "dist/ag.min.js": ["dist/ag.js"]
+        },
+        options: {
+          sourceMappingURL: "ag.map.js",
+          sourceMap: "dist/ag.map.js"
         }
       }
     }
-
   });
   
   grunt.registerTask("server", ["clean:server", "jshint", "connect:liveload", "open", "watch"]);
   
-  grunt.registerTask("build", ["clean:dist", "jshint", "copy:dist", "requirejs:dist"]);
+  grunt.registerTask("build", ["clean:dist", "jshint", "copy:dist", "requirejs:dist", "uglify:dist"]);
   
   grunt.registerTask("test", ["clean:server", "jshint", "connect:test", "watch"]);
   

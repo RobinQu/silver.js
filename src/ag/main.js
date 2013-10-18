@@ -6,8 +6,7 @@ require.config({
   paths: {
     backbone: "bower_components/backbone/backbone",
     jquery: "bower_components/jquery/jquery",
-    underscore: "bower_components/underscore/underscore",
-    requirejs: "bower_components/requirejs/require"
+    underscore: "bower_components/underscore/underscore"
   },
   shim: {
     backbone: {
