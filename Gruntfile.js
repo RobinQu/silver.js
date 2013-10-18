@@ -139,14 +139,12 @@ module.exports = function (grunt) {
     },
     
     uglify: {
-      options: {
-        mangle: false
-      },
       dist: {
         files: {
           "dist/ag.min.js": ["dist/ag.js"]
         },
         options: {
+          mangle: true,
           sourceMappingURL: "ag.map.js",
           sourceMap: "dist/ag.map.js"
         }
