@@ -1,4 +1,4 @@
-define(["backbone", "jquery"], function (Backbone, $) {
+define(["backbone"], function (Backbone) {
   "use strict";
   return Backbone.View.extend({
     

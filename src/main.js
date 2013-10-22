@@ -6,7 +6,8 @@ require.config({
   paths: {
     backbone: "bower_components/backbone/backbone",
     jquery: "bower_components/jquery/jquery",
-    underscore: "bower_components/underscore/underscore"
+    underscore: "bower_components/underscore/underscore",
+    requirejs: "bower_components/requirejs/require"
   },
   shim: {
     backbone: {
@@ -28,4 +29,5 @@ define(["./ag"], function (Ag) {
   if((typeof window !== "undefined") && !window.Ag) {
     window.Ag = Ag;
   }
+  console.log("Silver.js is loaded as window.Ag!");
 });

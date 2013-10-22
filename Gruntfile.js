@@ -164,12 +164,21 @@ module.exports = function (grunt) {
       server: {
         
       }
+    },
+    
+    bower: {
+      build: {
+        rjsConfig: "src/main.js",
+        options: {
+          baseUrl: "lib"
+        }
+      }
     }
   });
   
   grunt.registerTask("server", ["clean:server", "jshint", "connect:liveload", "open", "watch"]);
   
-  grunt.registerTask("build", ["clean:dist", "jshint", "copy:dist", "requirejs:dist", "uglify:dist"]);
+  grunt.registerTask("build", ["clean:dist", "jshint", "copy:dist", "bower:build", "requirejs:dist", "uglify:dist"]);
   
   grunt.registerTask("test", ["clean:server", "jshint", "connect:test", "watch"]);
   
