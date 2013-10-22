@@ -25,5 +25,7 @@ require.config({
 
 define(["./ag"], function (Ag) {
   "use strict";
-  console.log(Ag.version);
+  if((typeof window !== "undefined") && !window.Ag) {
+    window.Ag = Ag;
+  }
 });

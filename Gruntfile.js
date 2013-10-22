@@ -21,7 +21,7 @@ module.exports = function (grunt) {
           dot: true,
           cwd: "./src",
           dest: ".tmp",
-          src: ["ag/**/*"]
+          src: ["**/*"]
         }// , 
 //         {
 //           expand: true,
@@ -66,6 +66,7 @@ module.exports = function (grunt) {
           middleware: function (connect) {
             return [
               lrSnippet,
+              mountFolder(connect, "lib"),
               mountFolder(connect, "public"),
               mountFolder(connect, "src")
             ];
@@ -104,8 +105,8 @@ module.exports = function (grunt) {
         // Options: https://github.com/jrburke/r.js/blob/master/build/example.build.js
         options: {
           name: "ag",
-          baseUrl: ".tmp/ag",
-          mainConfigFile: ".tmp/ag/main.js",
+          baseUrl: ".tmp",
+          mainConfigFile: ".tmp/main.js",
           paths: {
             backbone: "empty:",
             jquery: "empty:",
@@ -148,6 +149,20 @@ module.exports = function (grunt) {
           sourceMappingURL: "ag.map.js",
           sourceMap: "dist/ag.map.js"
         }
+      }
+    },
+    
+    karma: {
+      options: {
+        configFile: "karma.conf.js",
+      },
+      continuous: {
+        browsers: ["PhantomJS"],
+        autoWatch: false,
+        singleRun: true
+      },
+      server: {
+        
       }
     }
   });

@@ -10,9 +10,7 @@ define(["core", "views", "controller"], function (Core, Views, Controller) {
   
   Ag.mixin(Ag, Views);
   Ag.Controller = Controller;
-  if((typeof window !== "undefined") && !window.Ag) {
-    window.Ag = Ag;
-  }
+
   return Ag;
   
 });
