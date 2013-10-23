@@ -13,14 +13,14 @@ tests.push("ag");
 
 requirejs.config({
   // Karma serves files from "/base"
-  baseUrl: "/base/src",
+  baseUrl: "/base/src/ag",
   
   packages: ["utils", "views"],
   
   paths: {
-    backbone: "../lib/bower_components/backbone/backbone",
-    jquery: "../lib/bower_components/jquery/jquery",
-    underscore: "../lib/bower_components/underscore/underscore"
+    backbone: "../bower_components/backbone/backbone",
+    jquery: "../bower_components/jquery/jquery",
+    underscore: "../bower_components/underscore/underscore"
   },
 
   shim: {

@@ -15,8 +15,8 @@ module.exports = function(config) {
     // list of files / patterns to load in the browser
     files: [
       "test/main.js",
-      {pattern: "lib/bower_components/**/*", included: false, watched: false},
-      {pattern: "src/**/*.js", included: false},
+      {pattern: "src/bower_components/**/*", included: false, watched: false},
+      {pattern: "src/ag/**/*.js", included: false},
       {pattern: "test/**/*Spec.js", included: false}
     ],
 

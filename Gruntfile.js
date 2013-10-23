@@ -66,7 +66,6 @@ module.exports = function (grunt) {
           middleware: function (connect) {
             return [
               lrSnippet,
-              mountFolder(connect, "lib"),
               mountFolder(connect, "public"),
               mountFolder(connect, "src")
             ];
@@ -91,7 +90,7 @@ module.exports = function (grunt) {
       ],
       options: {
         jshintrc: ".jshintrc",
-        ignores: []
+        ignores: ["src/bower_components/**/*.js"]
       }
     },
     
@@ -105,8 +104,8 @@ module.exports = function (grunt) {
         // Options: https://github.com/jrburke/r.js/blob/master/build/example.build.js
         options: {
           name: "ag",
-          baseUrl: ".tmp",
-          mainConfigFile: ".tmp/main.js",
+          baseUrl: ".tmp/ag",
+          mainConfigFile: ".tmp/ag/main.js",
           paths: {
             backbone: "empty:",
             jquery: "empty:",
@@ -156,7 +155,7 @@ module.exports = function (grunt) {
       options: {
         configFile: "karma.conf.js",
       },
-      continuous: {
+      build: {
         browsers: ["PhantomJS"],
         autoWatch: false,
         singleRun: true
@@ -168,9 +167,9 @@ module.exports = function (grunt) {
     
     bower: {
       build: {
-        rjsConfig: "src/main.js",
+        rjsConfig: "src/ag/main.js",
         options: {
-          baseUrl: "lib"
+          baseUrl: "src"
         }
       }
     }
@@ -180,7 +179,7 @@ module.exports = function (grunt) {
   
   grunt.registerTask("build", ["clean:dist", "jshint", "copy:dist", "bower:build", "requirejs:dist", "uglify:dist"]);
   
-  grunt.registerTask("test", ["clean:server", "jshint", "connect:test", "watch"]);
+  grunt.registerTask("test", ["clean:server", "jshint", "karma:build"]);
   
   grunt.registerTask("default", ["server"]);
   
